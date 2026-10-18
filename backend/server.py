@@ -1,17 +1,22 @@
+import logging
 import secrets
 from datetime import datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Query, status
+from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Query, Request, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 from sqlalchemy import select, text
 from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy.exc import InterfaceError, OperationalError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db import get_db
+from db import DatabaseNotConfigured, get_db
 from models import ContactMessage, NewsletterSubscriber
 from settings import settings
+
+log = logging.getLogger("nebtech.api")
 
 DB = Annotated[AsyncSession, Depends(get_db)]
 
@@ -19,10 +24,32 @@ app = FastAPI(title="NebTech API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
-    allow_credentials=True,
+    allow_credentials=False,  # no cookies are used, and credentials + "*" is invalid
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+
+@app.exception_handler(DatabaseNotConfigured)
+@app.exception_handler(OperationalError)
+@app.exception_handler(InterfaceError)
+@app.exception_handler(OSError)
+@app.exception_handler(TimeoutError)
+async def database_unavailable(request: Request, exc: Exception) -> JSONResponse:
+    """A database that is missing or unreachable is a 503, not a crash. The cause is logged."""
+    log.error(
+        "database unavailable on %s %s: %s: %s",
+        request.method,
+        request.url.path,
+        type(exc).__name__,
+        exc,
+    )
+    return JSONResponse(
+        {"detail": "The database is temporarily unavailable. Please try again."},
+        status_code=503,
+    )
+
 
 api = APIRouter(prefix="/api")
 
