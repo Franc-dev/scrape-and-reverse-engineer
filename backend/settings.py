@@ -7,6 +7,8 @@ class Settings(BaseSettings):
 
     database_url: str = "postgresql+asyncpg://forge:forge@db:5432/app"
     cors_origins: list[str] = ["*"]
+    # Token required (X-Admin-Token header) to list contact messages. Empty disables the endpoint.
+    admin_token: str = ""
 
 
 settings = Settings()
