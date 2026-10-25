@@ -91,6 +91,24 @@ p {
   }
 }
 
+.text-legible {
+  text-shadow: 0 1px 2px rgba(6, 20, 46, 0.45);
+}
+
+/* Slow settle of the hero photo: the hero's single entrance moment. */
+@keyframes hero-bg {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.hero-bg {
+  animation: hero-bg 2.4s var(--ease-out-expo) both;
+}
+
 @keyframes marquee {
   to {
     transform: translateX(-50%);
@@ -142,6 +160,7 @@ p {
     scroll-behavior: auto;
   }
   .marquee-track,
+  .hero-bg,
   .flow-line,
   .pulse-ring {
     animation: none;

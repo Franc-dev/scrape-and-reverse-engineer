@@ -25,6 +25,9 @@ export const nav = [
 
 export const hero = {
   title: "Your full‑service software partner.",
+  image: img("1611348524140-53c9a25263d6", 2000),
+  imageAlt: "Nairobi city skyline at dusk",
+  proof: "Microsoft Dynamics 365 Business Central · Nairobi & Nakuru",
   lead:
     "We implement and extend Microsoft Dynamics 365 Business Central, wire it to M-Pesa, Shopify and your CRM, then layer AI on top, so your business runs on one connected system instead of a pile of spreadsheets.",
   tags: [

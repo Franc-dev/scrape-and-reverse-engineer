@@ -96,16 +96,25 @@ export default function Hero() {
   const tags = [...hero.tags, ...hero.tags];
   return (
     <section id="top" className="on-dark relative isolate overflow-hidden bg-navy text-white">
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_85%_20%,rgba(155,138,251,0.22),transparent_60%),radial-gradient(60%_50%_at_0%_100%,rgba(6,20,46,0.9),transparent_70%)]"
-      />
+      <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
+        <img
+          src={hero.image}
+          alt=""
+          fetchPriority="high"
+          decoding="async"
+          className="hero-bg size-full object-cover object-[55%_60%]"
+        />
+        {/* Near-solid navy behind the copy, opening up on the right so the skyline shows behind the diagram. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/85 to-navy/95 lg:bg-gradient-to-r lg:from-navy lg:from-25% lg:via-navy/80 lg:to-navy/45" />
+        <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_85%_15%,rgba(155,138,251,0.28),transparent_60%)] mix-blend-screen" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/80 to-transparent" />
+      </div>
       <Container className="grid items-center gap-12 pt-16 pb-14 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:pt-24 lg:pb-20">
         <div>
-          <h1 className="text-[2.75rem] leading-[1.02] font-extrabold sm:text-6xl lg:text-[4.6rem]">
+          <h1 className="text-legible text-[2.75rem] leading-[1.02] font-extrabold sm:text-6xl lg:text-[4.6rem]">
             {hero.title}
           </h1>
-          <p className="mt-6 max-w-[36rem] text-lg leading-relaxed text-white/75">{hero.lead}</p>
+          <p className="text-legible mt-6 max-w-[36rem] text-lg leading-relaxed text-white/85">{hero.lead}</p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href="#contact" variant="lilac" className="group">
               Book a free consultation
@@ -115,15 +124,22 @@ export default function Hero() {
               Discover solutions
             </ButtonLink>
           </div>
+          <p className="mt-8 inline-flex items-center gap-2.5 rounded-2xl bg-white/10 sm:rounded-full px-4 py-2 text-sm font-medium text-white/90 ring-1 ring-white/20 backdrop-blur-md">
+            <span className="size-2 rounded-full bg-[#7ee0b5] shadow-[0_0_0_3px_rgba(126,224,181,0.2)]" aria-hidden />
+            {hero.proof}
+          </p>
         </div>
         {/* Below sm the diagram's labels shrink past legibility; the marquee carries the message there. */}
         <div className="hidden justify-center sm:flex lg:justify-end">
-          <IntegrationDiagram />
+          <div className="w-full max-w-[600px] rounded-[28px] bg-white/[0.06] p-5 shadow-[0_30px_60px_-30px_rgba(6,20,46,0.8)] ring-1 ring-white/15 backdrop-blur-xl lg:p-6">
+            <IntegrationDiagram />
+          </div>
         </div>
       </Container>
 
+      <div className="border-t border-white/12 bg-ink/35 backdrop-blur-md">
       <Container>
-        <dl className="grid grid-cols-2 border-t border-white/12 lg:grid-cols-4">
+        <dl className="grid grid-cols-2 lg:grid-cols-4">
           {stats.map((s, i) => (
             <div
               key={s.label}
@@ -139,6 +155,7 @@ export default function Hero() {
           ))}
         </dl>
       </Container>
+      </div>
 
       <div className="marquee relative overflow-hidden border-t border-white/10 bg-ink/40 py-4">
         <div className="marquee-track flex w-max gap-10 whitespace-nowrap">
