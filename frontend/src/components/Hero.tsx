@@ -102,11 +102,12 @@ export default function Hero() {
           alt=""
           fetchPriority="high"
           decoding="async"
-          className="hero-bg size-full object-cover object-[55%_60%]"
+          className="hero-bg size-full object-cover object-[60%_80%]"
         />
-        {/* Near-solid navy behind the copy, opening up on the right so the skyline shows behind the diagram. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/85 to-navy/95 lg:bg-gradient-to-r lg:from-navy lg:from-25% lg:via-navy/80 lg:to-navy/45" />
-        <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_85%_15%,rgba(155,138,251,0.28),transparent_60%)] mix-blend-screen" />
+        {/* Dense navy behind the copy only; the meeting stays visible on the right. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/75 to-navy/85 lg:bg-gradient-to-r lg:from-navy/95 lg:from-20% lg:via-navy/60 lg:via-50% lg:to-navy/20" />
+        <div className="absolute inset-y-0 left-0 hidden w-3/5 bg-[radial-gradient(70%_60%_at_25%_50%,rgba(6,20,46,0.45),transparent_75%)] lg:block" />
+        <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_90%_10%,rgba(155,138,251,0.22),transparent_60%)] mix-blend-screen" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/80 to-transparent" />
       </div>
       <Container className="grid items-center gap-12 pt-16 pb-14 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:pt-24 lg:pb-20">
@@ -131,7 +132,7 @@ export default function Hero() {
         </div>
         {/* Below sm the diagram's labels shrink past legibility; the marquee carries the message there. */}
         <div className="hidden justify-center sm:flex lg:justify-end">
-          <div className="w-full max-w-[600px] rounded-[28px] bg-white/[0.06] p-5 shadow-[0_30px_60px_-30px_rgba(6,20,46,0.8)] ring-1 ring-white/15 backdrop-blur-xl lg:p-6">
+          <div className="w-full max-w-[600px] rounded-[28px] bg-navy/30 p-5 shadow-[0_30px_60px_-30px_rgba(6,20,46,0.8)] ring-1 ring-white/15 backdrop-blur-[5px] backdrop-saturate-150 lg:p-6">
             <IntegrationDiagram />
           </div>
         </div>
